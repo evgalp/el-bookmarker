@@ -1,3 +1,5 @@
+const { shell } = require("electron");
+
 const parser = new DOMParser();
 
 const linksSection = document.querySelector(".links");
@@ -27,6 +29,13 @@ newLinkForm.addEventListener("submit", event => {
     .then(clearForm)
     .then(renderLinks)
     .catch(error => handleError(error, url));
+});
+
+linksSection.addEventListener("click", event => {
+  if (event.target.href) {
+    event.preventDefault();
+    shell.openExternal(event.target.href);
+  }
 });
 
 clearStorageButton.addEventListener("click", () => {
